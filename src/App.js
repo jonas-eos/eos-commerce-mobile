@@ -1,13 +1,12 @@
-/**
- * @format
- * @flow
- */
-
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 const App = () => {
-  return <View />;
+  return (
+    <View>
+      <Text>Teste</Text>
+    </View>
+  );
 };
 
 export default App;
