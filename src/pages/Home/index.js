@@ -14,7 +14,7 @@ import {
   ButtonTitle,
 } from './styles';
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <ProductList>
       <Product>
@@ -26,7 +26,7 @@ export default function Home() {
         />
         <ProductTitle>Mac book</ProductTitle>
         <ProductPrice>$: 11.000,00</ProductPrice>
-        <AddButton>
+        <AddButton onPress={() => navigation.navigate('Cart')}>
           <ProductAmount>
             <Icons name="add-shopping-cart" size={16} color="#fff" />
             <ProductAmountText>3</ProductAmountText>
