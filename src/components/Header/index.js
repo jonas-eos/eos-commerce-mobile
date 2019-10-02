@@ -6,11 +6,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Logo, Cart, ItemAmount } from './styles';
 
-function Header({ cartSize }) {
+function Header({ navigation, cartSize }) {
   return (
     <Container>
       <Logo />
-      <Cart>
+      <Cart onPress={() => navigation.navigate('Cart')}>
         <Icon name="shopping-basket" size={24} color="#fff" />
         <ItemAmount>{cartSize}</ItemAmount>
       </Cart>
@@ -18,9 +18,15 @@ function Header({ cartSize }) {
   );
 }
 
-/** cartSize is a number, and is required in ItemAmount component */
+/**
+ * cartSize is a number, and is required in ItemAmount component
+ * navigation is a object, and is required to browser into cart routes
+ */
 Header.propTypes = {
   cartSize: PropTypes.number.isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 };
 
 /**
