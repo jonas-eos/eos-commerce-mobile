@@ -1,0 +1,66 @@
+{
+  "stock": [
+    {
+      "id": 1,
+      "amount": 3
+    },
+    {
+      "id": 2,
+      "amount": 5
+    },
+    {
+      "id": 3,
+      "amount": 2
+    },
+    {
+      "id": 4,
+      "amount": 1
+    },
+    {
+      "id": 5,
+      "amount": 5
+    },
+    {
+      "id": 6,
+      "amount": 10
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "title": "1.4GHz Quad-Core Processor with Turbo Boost up to 3.9GHz 128GB Storage Touch Bar and Touch ID",
+      "price": 1299.0,
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp13touch-space-select-201807?wid=904&hei=840&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1529520060550"
+    },
+    {
+      "id": 2,
+      "title": "1.4GHz Quad-Core Processor with Turbo Boost up to 3.9GHz 256GB Storage Touch Bar and Touch ID",
+      "price": 1499.0,
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp13touch-space-select-201807?wid=904&hei=840&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1529520060550"
+    },
+    {
+      "id": 3,
+      "title": "2.4GHz Quad-Core Processor with Turbo Boost up to 4.1GHz 256GB Storage Touch Bar and Touch ID",
+      "price": 1799.0,
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp13touch-silver-select-201807?wid=904&hei=840&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1529520056377"
+    },
+    {
+      "id": 5,
+      "title": "2.6GHz 6-Core Processor with Turbo Boost up to 4.5GHz 256GB Storage Touch Bar and Touch ID",
+      "price": 2399.0,
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp15touch-space-select-201807?wid=904&hei=840&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1529520056969"
+    },
+    {
+      "id": 6,
+      "title": "1.6GHz Dual-Core Processor with Turbo Boost up to 3.6GHz 128GB Storage Touch ID",
+      "price": 1099.0,
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-space-gray-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1541713862468"
+    },
+    {
+      "id": 4,
+      "title": "1.6GHz Dual-Core Processor with Turbo Boost up to 3.6GHz 256GB Storage Touch ID",
+      "price": 1299.0,
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-gold-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1541713859040"
+    }
+  ]
+}
