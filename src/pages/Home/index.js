@@ -1,6 +1,9 @@
-import React from 'react';
-import Icons from 'react-native-vector-icons/MaterialIcons';
+import React, { Component } from 'react';
 import { FlatList } from 'react-native';
+import Icons from 'react-native-vector-icons/MaterialIcons';
+
+import { formatUsd } from '../../util/format';
+import api from '../../services/api';
 
 import {
   ProductList,
@@ -14,19 +17,52 @@ import {
   ButtonTitle,
 } from './styles';
 
-export default function Home({ navigation }) {
-  return (
-    <ProductList>
-      <Product>
+export default class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: [],
+    };
+  }
+
+  /** Mount all component */
+  componentDidMount() {
+    this.getProducts();
+  }
+
+  /**
+   * Get all products from API server.
+   * Save the information in data, and format the product price.
+   * set a new value to states.
+   * @async
+   */
+  getProducts = async () => {
+    const response = await api.get('products');
+
+    const data = response.data.map(product => ({
+      ...product,
+      priceFormatted: formatUsd(product.price),
+    }));
+
+    this.setState({ products: data });
+  };
+
+  /**
+   * Render only one product per item value.
+   * @param {object} item
+   * @return {component}
+   */
+  renderProduct = ({ item }) => {
+    return (
+      <Product key={item.id}>
         <ProductImage
           source={{
-            uri:
-              'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp13touch-space-select-201807?wid=904&hei=840&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1529520060550',
+            uri: item.image,
           }}
         />
-        <ProductTitle>Mac book</ProductTitle>
-        <ProductPrice>$: 11.000,00</ProductPrice>
-        <AddButton onPress={() => navigation.navigate('Cart')}>
+        <ProductTitle>{item.title}</ProductTitle>
+        <ProductPrice>{item.priceFormatted}</ProductPrice>
+        <AddButton onPress={() => {}}>
           <ProductAmount>
             <Icons name="add-shopping-cart" size={16} color="#fff" />
             <ProductAmountText>3</ProductAmountText>
@@ -34,6 +70,26 @@ export default function Home({ navigation }) {
           <ButtonTitle>Add to cart</ButtonTitle>
         </AddButton>
       </Product>
-    </ProductList>
-  );
+    );
+  };
+
+  /**
+   * Render all content.
+   * Inside this block, have a flat list that call a another render.
+   * The new render, call a unic product per time, showing all information
+   * get from API.
+   */
+  render() {
+    const { products } = this.state;
+    return (
+      <ProductList>
+        <FlatList
+          horizontal
+          data={products}
+          keyExtractor={item => String(item.id)}
+          renderItem={this.renderProduct}
+        />
+      </ProductList>
+    );
+  }
 }
