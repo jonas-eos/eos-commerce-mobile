@@ -1,3 +1,8 @@
+/**
+ * @overview
+ * This document connect all app with the rootReducer
+ * named as store.
+ */
 import { createStore } from 'redux';
 
 import rootReducer from './modules/rootReducer';

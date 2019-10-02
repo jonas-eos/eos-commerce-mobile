@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { FlatList } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 
@@ -17,7 +19,7 @@ import {
   ButtonTitle,
 } from './styles';
 
-export default class Home extends Component {
+class Home extends Component {
   constructor() {
     super();
     this.state = {
@@ -47,6 +49,15 @@ export default class Home extends Component {
     this.setState({ products: data });
   };
 
+  handleAddToCart = item => {
+    const { dispatch } = this.props;
+
+    dispatch({
+      type: 'ADD_TO_CART',
+      item,
+    });
+  };
+
   /**
    * Render only one product per item value.
    * @param {object} item
@@ -62,7 +73,7 @@ export default class Home extends Component {
         />
         <ProductTitle>{item.title}</ProductTitle>
         <ProductPrice>{item.priceFormatted}</ProductPrice>
-        <AddButton onPress={() => {}}>
+        <AddButton onPress={() => this.handleAddToCart(item)}>
           <ProductAmount>
             <Icons name="add-shopping-cart" size={16} color="#fff" />
             <ProductAmountText>3</ProductAmountText>
@@ -93,3 +104,13 @@ export default class Home extends Component {
     );
   }
 }
+
+/**
+ * dispatch is a function, and is required to
+ * send an action to cart reducer.
+ */
+Home.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(Home);
