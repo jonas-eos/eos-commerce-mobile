@@ -35,7 +35,7 @@ function CartScreen({ cart }) {
             <ProductInformation>
               <ProductImage source={{ uri: product.image }} />
               <ProductDetails>
-                <ProductName>Amount</ProductName>
+                <ProductName>{product.title}</ProductName>
                 <ProductPrice>{product.priceFormatted}</ProductPrice>
               </ProductDetails>
               <ProductDelete>
@@ -50,7 +50,7 @@ function CartScreen({ cart }) {
                   color={colors.main}
                 />
               </ProductControlButton>
-              <ProductAmount value={String(3)} />
+              <ProductAmount value={String(product.amount)} />
               <ProductControlButton>
                 <Icon name="add-circle-outline" size={20} color={colors.main} />
               </ProductControlButton>
