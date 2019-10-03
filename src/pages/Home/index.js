@@ -70,6 +70,9 @@ class HomeScreen extends Component {
    */
   renderProduct = product => {
     const { item } = product;
+    const { amount } = this.props;
+    const typ = typeof item.id;
+    console.tron.log(typ);
     return (
       <Product key={item.id}>
         <ProductImage
@@ -82,7 +85,7 @@ class HomeScreen extends Component {
         <AddButton onPress={() => this.handleAddToCart(item)}>
           <ProductAmount>
             <Icons name="add-shopping-cart" size={16} color="#fff" />
-            <ProductAmountText>3</ProductAmountText>
+            <ProductAmountText>{amount[item.id] || 0}</ProductAmountText>
           </ProductAmount>
           <ButtonTitle>Add to cart</ButtonTitle>
         </AddButton>
@@ -121,14 +124,31 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
 
 /**
+ * Get the amount value from global state
+ * and create a new local state named as amount
+ * with product amount in card.
+ * @param {object} state
+ */
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount, product) => {
+    const result = amount;
+    result[product.id] = product.amount;
+
+    return result;
+  }, {}),
+});
+
+/**
  * addToCart is a function that is required to call cart action
  * to add the product to cart.
+ * amount is a object or number
  */
 HomeScreen.propTypes = {
   addToCart: PropTypes.func.isRequired,
+  amount: PropTypes.oneOfType([PropTypes.object, PropTypes.number]).isRequired,
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(HomeScreen);
