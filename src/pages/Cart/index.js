@@ -26,7 +26,7 @@ import {
   OrderText,
 } from './styles';
 
-function CartScreen({ cart }) {
+function CartScreen({ cart, dispatch }) {
   return (
     <Container>
       <Products>
@@ -38,7 +38,9 @@ function CartScreen({ cart }) {
                 <ProductName>{product.title}</ProductName>
                 <ProductPrice>{product.priceFormatted}</ProductPrice>
               </ProductDetails>
-              <ProductDelete>
+              <ProductDelete
+                onPress={() => dispatch({ type: 'REMOVE_FROM_CART', product })}
+              >
                 <Icon name="delete-forever" size={24} color={colors.main} />
               </ProductDelete>
             </ProductInformation>

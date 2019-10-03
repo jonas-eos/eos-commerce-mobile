@@ -49,21 +49,22 @@ class HomeScreen extends Component {
     this.setState({ products: data });
   };
 
-  handleAddToCart = item => {
+  handleAddToCart = product => {
     const { dispatch } = this.props;
 
     dispatch({
       type: 'ADD_TO_CART',
-      item,
+      product,
     });
   };
 
   /**
    * Render only one product per item value.
-   * @param {object} item
+   * @param {object} product
    * @return {component}
    */
-  renderProduct = ({ item }) => {
+  renderProduct = product => {
+    const { item } = product;
     return (
       <Product key={item.id}>
         <ProductImage
@@ -97,7 +98,7 @@ class HomeScreen extends Component {
         <FlatList
           horizontal
           data={products}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={product => String(product.id)}
           renderItem={this.renderProduct}
         />
       </ProductList>
