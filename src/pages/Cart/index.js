@@ -6,6 +6,7 @@ import { PropTypes } from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../styles/global';
 
+import { formatUsd } from '../../util/format';
 import * as CartActions from '../../store/modules/cart/actions';
 
 import {
@@ -29,7 +30,7 @@ import {
   OrderText,
 } from './styles';
 
-function CartScreen({ cart, removeFromCart, updateAmount }) {
+function CartScreen({ cart, removeFromCart, updateAmount, total }) {
   // Send increment action to reducers
   const increment = ({ id, amount }) => updateAmount(id, amount + 1);
 
@@ -63,14 +64,14 @@ function CartScreen({ cart, removeFromCart, updateAmount }) {
               <ProductControlButton onPress={() => increment(product)}>
                 <Icon name="add-circle-outline" size={20} color={colors.main} />
               </ProductControlButton>
-              <ProductTotalPrice>R$ 33.000,00</ProductTotalPrice>
+              <ProductTotalPrice>{product.subtotal}</ProductTotalPrice>
             </ProductControls>
           </Product>
         ))}
       </Products>
       <OrderContainer>
         <TotalTitle>Total</TotalTitle>
-        <TotalPrice>$: 11.000.00</TotalPrice>
+        <TotalPrice>{total}</TotalPrice>
         <Order>
           <OrderText>Place Order</OrderText>
         </Order>
@@ -82,11 +83,21 @@ function CartScreen({ cart, removeFromCart, updateAmount }) {
 /**
  * This function, convert reducer global state into local state.
  * Get cart state and insert into local state.
+ * Calculate the subtotal price of the product in cart.
+ * Calculate total order price.
  * @const
  * @function
  */
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart.map(product => ({
+    ...product,
+    subtotal: formatUsd(product.price * product.amount),
+  })),
+  total: formatUsd(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ),
 });
 
 /**
@@ -108,6 +119,7 @@ CartScreen.propTypes = {
   ).isRequired,
   removeFromCart: PropTypes.func.isRequired,
   updateAmount: PropTypes.func.isRequired,
+  total: PropTypes.string.isRequired,
 };
 
 export default connect(
