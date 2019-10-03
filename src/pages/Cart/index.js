@@ -29,7 +29,13 @@ import {
   OrderText,
 } from './styles';
 
-function CartScreen({ cart, removeFromCart }) {
+function CartScreen({ cart, removeFromCart, updateAmount }) {
+  // Send increment action to reducers
+  const increment = ({ id, amount }) => updateAmount(id, amount + 1);
+
+  // Send decrement action to reducers
+  const decrement = ({ id, amount }) => updateAmount(id, amount - 1);
+
   return (
     <Container>
       <Products>
@@ -46,7 +52,7 @@ function CartScreen({ cart, removeFromCart }) {
               </ProductDelete>
             </ProductInformation>
             <ProductControls>
-              <ProductControlButton>
+              <ProductControlButton onPress={() => decrement(product)}>
                 <Icon
                   name="remove-circle-outline"
                   size={20}
@@ -54,7 +60,7 @@ function CartScreen({ cart, removeFromCart }) {
                 />
               </ProductControlButton>
               <ProductAmount value={String(product.amount)} />
-              <ProductControlButton>
+              <ProductControlButton onPress={() => increment(product)}>
                 <Icon name="add-circle-outline" size={20} color={colors.main} />
               </ProductControlButton>
               <ProductTotalPrice>R$ 33.000,00</ProductTotalPrice>
@@ -101,6 +107,7 @@ CartScreen.propTypes = {
     })
   ).isRequired,
   removeFromCart: PropTypes.func.isRequired,
+  updateAmount: PropTypes.func.isRequired,
 };
 
 export default connect(
