@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
+import { FlatList } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../styles/global';
@@ -30,45 +31,51 @@ import {
   OrderText,
 } from './styles';
 
-function CartScreen({ cart, removeFromCart, updateAmount, total }) {
+class CartScreen extends Component {
   // Send increment action to reducers
-  const increment = ({ id, amount }) => updateAmount(id, amount + 1);
+  increment = ({ id, amount }) => {
+    const { updateAmount } = this.props;
+    updateAmount(id, amount + 1);
+  };
 
   // Send decrement action to reducers
-  const decrement = ({ id, amount }) => updateAmount(id, amount - 1);
+  decrement = ({ id, amount }) => {
+    const { updateAmount } = this.props;
+    updateAmount(id, amount - 1);
+  };
 
-  return (
-    <Container>
-      <Products>
-        {cart.map(product => (
-          <Product key={product.id}>
-            <ProductInformation>
-              <ProductImage source={{ uri: product.image }} />
-              <ProductDetails>
-                <ProductName>{product.title}</ProductName>
-                <ProductPrice>{product.priceFormatted}</ProductPrice>
-              </ProductDetails>
-              <ProductDelete onPress={() => removeFromCart(product)}>
-                <Icon name="delete-forever" size={24} color={colors.main} />
-              </ProductDelete>
-            </ProductInformation>
-            <ProductControls>
-              <ProductControlButton onPress={() => decrement(product)}>
-                <Icon
-                  name="remove-circle-outline"
-                  size={20}
-                  color={colors.main}
-                />
-              </ProductControlButton>
-              <ProductAmount value={String(product.amount)} />
-              <ProductControlButton onPress={() => increment(product)}>
-                <Icon name="add-circle-outline" size={20} color={colors.main} />
-              </ProductControlButton>
-              <ProductTotalPrice>{product.subtotal}</ProductTotalPrice>
-            </ProductControls>
-          </Product>
-        ))}
-      </Products>
+  renderProduct = product => {
+    const { removeFromCart } = this.props;
+    const { item } = product;
+    return (
+      <Product key={item.id}>
+        <ProductInformation>
+          <ProductImage source={{ uri: item.image }} />
+          <ProductDetails>
+            <ProductName>{item.title}</ProductName>
+            <ProductPrice>{item.priceFormatted}</ProductPrice>
+          </ProductDetails>
+          <ProductDelete onPress={() => removeFromCart(item)}>
+            <Icon name="delete-forever" size={24} color={colors.main} />
+          </ProductDelete>
+        </ProductInformation>
+        <ProductControls>
+          <ProductControlButton onPress={() => this.decrement(item)}>
+            <Icon name="remove-circle-outline" size={20} color={colors.main} />
+          </ProductControlButton>
+          <ProductAmount value={String(item.amount)} />
+          <ProductControlButton onPress={() => this.increment(item)}>
+            <Icon name="add-circle-outline" size={20} color={colors.main} />
+          </ProductControlButton>
+          <ProductTotalPrice>{item.subtotal}</ProductTotalPrice>
+        </ProductControls>
+      </Product>
+    );
+  };
+
+  renderOrder = () => {
+    const { total } = this.props;
+    return (
       <OrderContainer>
         <TotalTitle>Total</TotalTitle>
         <TotalPrice>{total}</TotalPrice>
@@ -76,8 +83,22 @@ function CartScreen({ cart, removeFromCart, updateAmount, total }) {
           <OrderText>Place Order</OrderText>
         </Order>
       </OrderContainer>
-    </Container>
-  );
+    );
+  };
+
+  render() {
+    const { cart } = this.props;
+    return (
+      <Container>
+        <Products
+          data={cart}
+          keyExtractor={product => String(product.id)}
+          renderItem={this.renderProduct}
+          ListFooterComponent={this.renderOrder}
+        />
+      </Container>
+    );
+  }
 }
 
 /**

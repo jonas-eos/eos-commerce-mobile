@@ -71,8 +71,6 @@ class HomeScreen extends Component {
   renderProduct = product => {
     const { item } = product;
     const { amount } = this.props;
-    const typ = typeof item.id;
-    console.tron.log(typ);
     return (
       <Product key={item.id}>
         <ProductImage

@@ -8,7 +8,7 @@ export const Container = styled.View`
   margin: 15px;
 `;
 
-export const Products = styled.View``;
+export const Products = styled.FlatList``;
 export const Product = styled.View``;
 
 export const ProductInformation = styled.View`
