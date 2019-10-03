@@ -16,7 +16,7 @@ export default function cart(state = [], action) {
      * the cart, so every time you add a new product through HomeScreen, add +1 to
      * the product quantity.
      */
-    case 'ADD_TO_CART':
+    case '@cart/ADD':
       return produce(state, draft => {
         const nextState = draft;
 
@@ -36,7 +36,7 @@ export default function cart(state = [], action) {
      * This action first searches for which index the item that came from the
      * action is located, and then deletes this item from the cart.
      */
-    case 'REMOVE_FROM_CART':
+    case '@cart/REMOVE':
       return produce(state, draft => {
         const productIndex = draft.findIndex(
           product => product.id === action.product.id

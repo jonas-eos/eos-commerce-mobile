@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../styles/global';
+
+import * as CartActions from '../../store/modules/cart/actions';
 
 import {
   Container,
@@ -26,7 +29,7 @@ import {
   OrderText,
 } from './styles';
 
-function CartScreen({ cart, dispatch }) {
+function CartScreen({ cart, removeFromCart }) {
   return (
     <Container>
       <Products>
@@ -38,9 +41,7 @@ function CartScreen({ cart, dispatch }) {
                 <ProductName>{product.title}</ProductName>
                 <ProductPrice>{product.priceFormatted}</ProductPrice>
               </ProductDetails>
-              <ProductDelete
-                onPress={() => dispatch({ type: 'REMOVE_FROM_CART', product })}
-              >
+              <ProductDelete onPress={() => removeFromCart(product)}>
                 <Icon name="delete-forever" size={24} color={colors.main} />
               </ProductDelete>
             </ProductInformation>
@@ -72,6 +73,25 @@ function CartScreen({ cart, dispatch }) {
   );
 }
 
+/**
+ * This function, convert reducer global state into local state.
+ * Get cart state and insert into local state.
+ * @const
+ * @function
+ */
+const mapStateToProps = state => ({
+  cart: state.cart,
+});
+
+/**
+ * This function, convert reducer action into local properties.
+ * Get cart cartions
+ * @const
+ * @function
+ */
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
 CartScreen.propTypes = {
   cart: PropTypes.arrayOf(
     PropTypes.shape({
@@ -80,10 +100,10 @@ CartScreen.propTypes = {
       priceFormatted: PropTypes.string,
     })
   ).isRequired,
+  removeFromCart: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  cart: state.cart,
-});
-
-export default connect(mapStateToProps)(CartScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CartScreen);

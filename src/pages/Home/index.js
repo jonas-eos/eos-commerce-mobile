@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
 import { FlatList } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 
+import * as CartActions from '../../store/modules/cart/actions';
 import { formatUsd } from '../../util/format';
 import api from '../../services/api';
 
@@ -49,13 +51,16 @@ class HomeScreen extends Component {
     this.setState({ products: data });
   };
 
+  /**
+   * Handler to add a product to cart.
+   * Call the action add to cart.
+   * @function
+   * @param {object} product
+   */
   handleAddToCart = product => {
-    const { dispatch } = this.props;
+    const { addToCart } = this.props;
 
-    dispatch({
-      type: 'ADD_TO_CART',
-      product,
-    });
+    addToCart(product);
   };
 
   /**
@@ -107,11 +112,23 @@ class HomeScreen extends Component {
 }
 
 /**
- * dispatch is a function, and is required to
- * send an action to cart reducer.
+ * This function convert reducer actions into local properties.
+ * Get cart actions
+ * @const
+ * @function
+ */
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+/**
+ * addToCart is a function that is required to call cart action
+ * to add the product to cart.
  */
 HomeScreen.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
-export default connect()(HomeScreen);
+export default connect(
+  null,
+  mapDispatchToProps
+)(HomeScreen);
