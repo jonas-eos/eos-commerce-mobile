@@ -25,7 +25,7 @@ import {
   OrderText,
 } from './styles';
 
-export default function Cart() {
+export default function CartScreen() {
   return (
     <Container>
       <Products>

@@ -4,12 +4,14 @@ import { PropTypes } from 'prop-types';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Container, Logo, Cart, ItemAmount } from './styles';
+import { Container, LogoButtom, Logo, Cart, ItemAmount } from './styles';
 
 function Header({ navigation, cartSize }) {
   return (
     <Container>
-      <Logo />
+      <LogoButtom onPress={() => navigation.navigate('Home')}>
+        <Logo />
+      </LogoButtom>
       <Cart onPress={() => navigation.navigate('Cart')}>
         <Icon name="shopping-basket" size={24} color="#fff" />
         <ItemAmount>{cartSize}</ItemAmount>

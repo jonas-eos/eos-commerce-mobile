@@ -19,7 +19,7 @@ import {
   ButtonTitle,
 } from './styles';
 
-class Home extends Component {
+class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
@@ -109,8 +109,8 @@ class Home extends Component {
  * dispatch is a function, and is required to
  * send an action to cart reducer.
  */
-Home.propTypes = {
+HomeScreen.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(Home);
+export default connect()(HomeScreen);

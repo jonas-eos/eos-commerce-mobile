@@ -4,24 +4,29 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import colors from './styles/global';
 import Header from './components/Header';
-import Home from './pages/Home';
-import Cart from './pages/Cart';
+import HomeScreen from './pages/Home';
+import CartScreen from './pages/Cart';
 
-const Routes = createAppContainer(
-  createStackNavigator(
-    {
-      Home,
-      Cart,
+const MainNavigatior = createStackNavigator(
+  {
+    Home: { screen: HomeScreen },
+    Cart: { screen: CartScreen },
+  },
+  {
+    defaultNavigationOptions: navigation => ({
+      header: (
+        <Header
+          navigation={navigation.navigation}
+          cartSize={navigation.cartSize}
+        />
+      ),
+    }),
+    cardStyle: {
+      backgroundColor: colors.dark,
     },
-    {
-      defaultNavigationOptions: navigation => ({
-        header: <Header {...navigation} />,
-      }),
-      cardStyle: {
-        backgroundColor: colors.dark,
-      },
-    }
-  )
+  }
 );
+
+const Routes = createAppContainer(MainNavigatior);
 
 export default Routes;

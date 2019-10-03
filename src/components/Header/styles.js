@@ -10,6 +10,12 @@ export const Container = styled.View`
   background: ${colors.dark};
 `;
 
+export const LogoButtom = styled.TouchableOpacity`
+  width: 128px;
+  height: 24px;
+  flex: 1;
+`;
+
 export const Logo = styled.Image.attrs({
   source: logo,
   resizeMode: 'contain',
