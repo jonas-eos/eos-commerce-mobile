@@ -2,7 +2,11 @@ import { call, select, put, all, takeLatest } from 'redux-saga/effects';
 
 import api from '../../../services/api';
 import { formatUsd } from '../../../util/format';
-import { addToCartSuccess, updateAmount } from './actions';
+import {
+  addToCartSuccess,
+  removeFromCartSuccess,
+  updateAmount,
+} from './actions';
 
 /**
  * Searches the global state for a product according to the request id.
@@ -35,5 +39,22 @@ function* addToCart({ productId }) {
     yield put(addToCartSuccess(data));
   }
 }
+/**
+ * Take the index number from the product in the cart and send it to the reducer
+ * remove.
+ * @param {Number} productId
+ * @generator
+ * @yields {Number} The product index in cart.
+ */
+function* removeToCart({ productId }) {
+  const productIndex = yield select(state =>
+    state.cart.findIndex(product => product.id === productId)
+  );
 
-export default all([takeLatest('@cart/ADD_REQUEST', addToCart)]);
+  yield put(removeFromCartSuccess(productIndex));
+}
+
+export default all([
+  takeLatest('@cart/ADD_REQUEST', addToCart),
+  takeLatest('@cart/REMOVE_REQUEST', removeToCart),
+]);

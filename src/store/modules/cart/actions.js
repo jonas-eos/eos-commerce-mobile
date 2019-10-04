@@ -22,17 +22,31 @@ export const addToCartSuccess = product => {
   };
 };
 
-/**
- * Send action to remove a product from cart state
- * @param {Number} productId
- * @return The action call, and product id.
- */
-export const removeFromCart = productId => {
+export const removeFromCartRequest = productId => {
   return {
-    type: '@cart/REMOVE',
+    type: '@cart/REMOVE_REQUEST',
     productId,
   };
 };
+
+export const removeFromCartSuccess = product => {
+  return {
+    type: '@cart/REMOVE_SUCCESS',
+    product,
+  };
+};
+
+// /**
+//  * Send action to remove a product from cart state
+//  * @param {Number} productId
+//  * @return The action call, and product id.
+//  */
+// export const removeFromCart = productId => {
+//   return {
+//     type: '@cart/REMOVE',
+//     productId,
+//   };
+// };
 
 /**
  * Send action to update the item amount in cart state.

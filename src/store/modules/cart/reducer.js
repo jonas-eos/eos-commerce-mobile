@@ -14,20 +14,11 @@ export default function cart(state = [], action) {
         draft.push(product);
       });
 
-    /**
-     * Action to remove itens to cart
-     * This action first searches for which index the item that came from the
-     * action is located, and then deletes this item from the cart.
-     */
-    case '@cart/REMOVE':
+    /** Action to remove itens to cart */
+    case '@cart/REMOVE_SUCCESS':
       return produce(state, draft => {
-        const productIndex = draft.findIndex(
-          product => product.id === action.productId
-        );
-
-        if (productIndex >= 0) {
-          draft.splice(productIndex, 1);
-        }
+        const { product } = action;
+        draft.splice(product, 1);
       });
 
     /**

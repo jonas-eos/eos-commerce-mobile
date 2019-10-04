@@ -44,7 +44,7 @@ class CartScreen extends Component {
   };
 
   renderProduct = product => {
-    const { removeFromCart } = this.props;
+    const { removeFromCartRequest } = this.props;
     const { item } = product;
     return (
       <Product key={item.id}>
@@ -54,7 +54,7 @@ class CartScreen extends Component {
             <ProductName>{item.title}</ProductName>
             <ProductPrice>{item.priceFormatted}</ProductPrice>
           </ProductDetails>
-          <ProductDelete onPress={() => removeFromCart(item.id)}>
+          <ProductDelete onPress={() => removeFromCartRequest(item.id)}>
             <Icon name="delete-forever" size={24} color={colors.main} />
           </ProductDelete>
         </ProductInformation>
@@ -137,7 +137,7 @@ CartScreen.propTypes = {
       priceFormatted: PropTypes.string,
     })
   ).isRequired,
-  removeFromCart: PropTypes.func.isRequired,
+  removeFromCartRequest: PropTypes.func.isRequired,
   updateAmount: PropTypes.func.isRequired,
   total: PropTypes.string.isRequired,
 };
