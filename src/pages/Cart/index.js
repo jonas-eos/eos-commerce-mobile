@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
-import { FlatList } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../styles/global';
