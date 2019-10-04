@@ -1,11 +1,23 @@
 /**
+ * Send a request to add a product in cart state
+ * @param {Number} productId
+ * @return The request call, and product id.
+ */
+export const addToCartRequest = productId => {
+  return {
+    type: '@cart/ADD_REQUEST',
+    productId,
+  };
+};
+
+/**
  * Send action to add a product in cart state
  * @param {object} product
  * @return The action call, and product properties.
  */
-export const addToCart = product => {
+export const addToCartSuccess = product => {
   return {
-    type: '@cart/ADD',
+    type: '@cart/ADD_SUCCESS',
     product,
   };
 };
@@ -15,10 +27,10 @@ export const addToCart = product => {
  * @param {object} product
  * @return The action call, and product properties.
  */
-export const removeFromCart = product => {
+export const removeFromCart = productId => {
   return {
     type: '@cart/REMOVE',
-    product,
+    productId,
   };
 };
 

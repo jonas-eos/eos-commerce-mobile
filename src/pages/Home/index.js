@@ -53,14 +53,15 @@ class HomeScreen extends Component {
 
   /**
    * Handler to add a product to cart.
-   * Call the action add to cart.
+   * Call a request add a product by id in cart.
    * @function
-   * @param {object} product
+   * @param {Number} productId
    */
-  handleAddToCart = product => {
-    const { addToCart } = this.props;
+  handleAddToCart = productId => {
+    const { addToCartRequest } = this.props;
+    console.tron.log(productId);
 
-    addToCart(product);
+    addToCartRequest(productId);
   };
 
   /**
@@ -80,7 +81,7 @@ class HomeScreen extends Component {
         />
         <ProductTitle>{item.title}</ProductTitle>
         <ProductPrice>{item.priceFormatted}</ProductPrice>
-        <AddButton onPress={() => this.handleAddToCart(item)}>
+        <AddButton onPress={() => this.handleAddToCart(item.id)}>
           <ProductAmount>
             <Icons name="add-shopping-cart" size={16} color="#fff" />
             <ProductAmountText>{amount[item.id] || 0}</ProductAmountText>
@@ -142,7 +143,7 @@ const mapStateToProps = state => ({
  * amount is a object or number
  */
 HomeScreen.propTypes = {
-  addToCart: PropTypes.func.isRequired,
+  addToCartRequest: PropTypes.func.isRequired,
   amount: PropTypes.oneOfType([PropTypes.object, PropTypes.number]).isRequired,
 };
 

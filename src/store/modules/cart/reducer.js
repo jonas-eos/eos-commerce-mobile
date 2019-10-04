@@ -16,9 +16,10 @@ export default function cart(state = [], action) {
      * the cart, so every time you add a new product through HomeScreen, add +1 to
      * the product quantity.
      */
-    case '@cart/ADD':
+    case '@cart/ADD_SUCCESS':
       return produce(state, draft => {
         const nextState = draft;
+        console.tron.log(action);
 
         const productIndex = nextState.findIndex(
           product => product.id === action.product.id
