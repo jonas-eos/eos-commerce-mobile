@@ -22,6 +22,11 @@ export const addToCartSuccess = product => {
   };
 };
 
+/**
+ * Send request to remove a product from cart state
+ * @param {number} productId
+ * @return The action call, and product id.
+ */
 export const removeFromCartRequest = productId => {
   return {
     type: '@cart/REMOVE_REQUEST',
@@ -29,35 +34,42 @@ export const removeFromCartRequest = productId => {
   };
 };
 
-export const removeFromCartSuccess = product => {
+/**
+ * Send action to remove a product from cart state
+ * @param {Number} productIndex
+ * @return The action call, and product index in cart.
+ */
+export const removeFromCartSuccess = productIndex => {
   return {
     type: '@cart/REMOVE_SUCCESS',
-    product,
+    productIndex,
   };
 };
 
-// /**
-//  * Send action to remove a product from cart state
-//  * @param {Number} productId
-//  * @return The action call, and product id.
-//  */
-// export const removeFromCart = productId => {
-//   return {
-//     type: '@cart/REMOVE',
-//     productId,
-//   };
-// };
+/**
+ * Send request to change the item amount in cart state.
+ * @param {number} productId
+ * @param {number} amount the new value to be updated
+ * @return The action call, product id and new amount.
+ */
+export const updateAmountRequest = (productId, amount) => {
+  return {
+    type: '@cart/UPDATE_AMOUNT_REQUEST',
+    productId,
+    amount,
+  };
+};
 
 /**
- * Send action to update the item amount in cart state.
- * @param {number} productId
- * @param {integer} amount
- * @return The action call, productId properties and amount.
+ * Send action to change the item amount in cart state.
+ * @param {number} productIndex The index of the product in cart
+ * @param {number} amount the new value to be updated
+ * @return The action call, product index and new amount.
  */
-export const updateAmount = (productId, amount) => {
+export const updateAmountSuccess = (productIndex, amount) => {
   return {
-    type: '@cart/UPDATE_AMOUNT',
-    productId,
+    type: '@cart/UPDATE_AMOUNT_SUCCESS',
+    productIndex,
     amount,
   };
 };

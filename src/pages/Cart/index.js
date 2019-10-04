@@ -33,14 +33,14 @@ import {
 class CartScreen extends Component {
   // Send increment action to reducers
   increment = ({ id, amount }) => {
-    const { updateAmount } = this.props;
-    updateAmount(id, amount + 1);
+    const { updateAmountRequest } = this.props;
+    updateAmountRequest(id, amount + 1);
   };
 
   // Send decrement action to reducers
   decrement = ({ id, amount }) => {
-    const { updateAmount } = this.props;
-    updateAmount(id, amount - 1);
+    const { updateAmountRequest } = this.props;
+    updateAmountRequest(id, amount - 1);
   };
 
   renderProduct = product => {
@@ -138,7 +138,7 @@ CartScreen.propTypes = {
     })
   ).isRequired,
   removeFromCartRequest: PropTypes.func.isRequired,
-  updateAmount: PropTypes.func.isRequired,
+  updateAmountRequest: PropTypes.func.isRequired,
   total: PropTypes.string.isRequired,
 };
 

@@ -5,7 +5,8 @@ import { formatUsd } from '../../../util/format';
 import {
   addToCartSuccess,
   removeFromCartSuccess,
-  updateAmount,
+  updateAmountSuccess,
+  updateAmountRequest,
 } from './actions';
 
 /**
@@ -26,7 +27,12 @@ function* addToCart({ productId }) {
   /** Rules to manipulate the cart */
   if (productExists) {
     const amount = productExists.amount + 1;
-    yield put(updateAmount(productId, amount));
+
+    const productIndex = yield select(state =>
+      state.cart.findIndex(product => product.id === productId)
+    );
+
+    yield put(updateAmountSuccess(productIndex, amount));
   } else {
     const response = yield call(api.get, `/products/${productId}`);
 
@@ -54,7 +60,29 @@ function* removeToCart({ productId }) {
   yield put(removeFromCartSuccess(productIndex));
 }
 
+/**
+ * The amount cannot be less than 0.
+ * The action must be send informing the product index in the cart, and the new
+ * quantity that will be updated in the cart.
+ * @param {Number} productId
+ * @param {Number} amount - The new value to be updated
+ * @generator
+ * @yields {Number} product index and amount
+ */
+function* updateAmount({ productId, amount }) {
+  if (amount <= 0) {
+    return;
+  }
+
+  const productIndex = yield select(state =>
+    state.cart.findIndex(product => product.id === productId)
+  );
+
+  yield put(updateAmountSuccess(productIndex, amount));
+}
+
 export default all([
   takeLatest('@cart/ADD_REQUEST', addToCart),
   takeLatest('@cart/REMOVE_REQUEST', removeToCart),
+  takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),
 ]);

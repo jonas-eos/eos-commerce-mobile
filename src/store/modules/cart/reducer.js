@@ -17,31 +17,16 @@ export default function cart(state = [], action) {
     /** Action to remove itens to cart */
     case '@cart/REMOVE_SUCCESS':
       return produce(state, draft => {
-        const { product } = action;
-        draft.splice(product, 1);
+        const { productIndex } = action;
+        draft.splice(productIndex, 1);
       });
 
-    /**
-     * Action to update itens in cart
-     * This action first searches for which index the item that came from the
-     * action is located, and then update this item in cart if the total amount
-     * is not <= 0.
-     */
-    case '@cart/UPDATE_AMOUNT':
-      if (action.amount <= 0) {
-        return state;
-      }
-
+    /** Action to update item amount in cart */
+    case '@cart/UPDATE_AMOUNT_SUCCESS':
       return produce(state, draft => {
+        const { productIndex, amount } = action;
         const nextState = draft;
-
-        const productIndex = nextState.findIndex(
-          product => product.id === action.productId
-        );
-
-        if (productIndex >= 0) {
-          nextState[productIndex].amount = Number(action.amount);
-        }
+        nextState[productIndex].amount = Number(amount);
       });
     default:
       return state;
