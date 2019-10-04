@@ -6,7 +6,6 @@ import {
   addToCartSuccess,
   removeFromCartSuccess,
   updateAmountSuccess,
-  updateAmountRequest,
 } from './actions';
 
 /**
