@@ -19,7 +19,6 @@ export default function cart(state = [], action) {
     case '@cart/ADD_SUCCESS':
       return produce(state, draft => {
         const nextState = draft;
-        console.tron.log(action);
 
         const productIndex = nextState.findIndex(
           product => product.id === action.product.id
