@@ -59,7 +59,6 @@ class HomeScreen extends Component {
    */
   handleAddToCart = productId => {
     const { addToCartRequest } = this.props;
-    console.tron.log(productId);
 
     addToCartRequest(productId);
   };

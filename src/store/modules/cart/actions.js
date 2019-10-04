@@ -24,8 +24,8 @@ export const addToCartSuccess = product => {
 
 /**
  * Send action to remove a product from cart state
- * @param {object} product
- * @return The action call, and product properties.
+ * @param {Number} productId
+ * @return The action call, and product id.
  */
 export const removeFromCart = productId => {
   return {

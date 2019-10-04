@@ -40,7 +40,7 @@ export default function cart(state = [], action) {
     case '@cart/REMOVE':
       return produce(state, draft => {
         const productIndex = draft.findIndex(
-          product => product.id === action.product.id
+          product => product.id === action.productId
         );
 
         if (productIndex >= 0) {

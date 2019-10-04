@@ -54,7 +54,7 @@ class CartScreen extends Component {
             <ProductName>{item.title}</ProductName>
             <ProductPrice>{item.priceFormatted}</ProductPrice>
           </ProductDetails>
-          <ProductDelete onPress={() => removeFromCart(item)}>
+          <ProductDelete onPress={() => removeFromCart(item.id)}>
             <Icon name="delete-forever" size={24} color={colors.main} />
           </ProductDelete>
         </ProductInformation>
