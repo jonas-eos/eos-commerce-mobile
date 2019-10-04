@@ -13,6 +13,8 @@ import {
  * If the product is already in the state, only add mount in cart.
  * If the product is not in state, a request is sent to the API, and the cart
  * is updated with the return data from the API.
+ * The amount of product you add to cart cannot be greater than the total amount
+ * in stock.
  * @param {Number} productId
  * @generator
  * @yields {object} The product data.
@@ -23,10 +25,19 @@ function* addToCart({ productId }) {
     state.cart.find(product => product.id === productId)
   );
 
+  /** Get the product stock */
+  const stock = yield call(api.get, `/stock/${productId}`);
+
+  const { amount: stockAmount } = stock.data;
+  const currentAmount = productExists ? productExists.amount : 0;
+  const amount = currentAmount + 1;
+
+  if (amount > stockAmount) {
+    return;
+  }
+
   /** Rules to manipulate the cart */
   if (productExists) {
-    const amount = productExists.amount + 1;
-
     const productIndex = yield select(state =>
       state.cart.findIndex(product => product.id === productId)
     );
@@ -63,6 +74,8 @@ function* removeToCart({ productId }) {
  * The amount cannot be less than 0.
  * The action must be send informing the product index in the cart, and the new
  * quantity that will be updated in the cart.
+ * The amount of product you add to cart cannot be greater than the total amount
+ * in stock.
  * @param {Number} productId
  * @param {Number} amount - The new value to be updated
  * @generator
@@ -76,6 +89,14 @@ function* updateAmount({ productId, amount }) {
   const productIndex = yield select(state =>
     state.cart.findIndex(product => product.id === productId)
   );
+
+  const stock = yield call(api.get, `/stock/${productId}`);
+
+  const { amount: stockAmount } = stock.data;
+
+  if (amount > stockAmount) {
+    return;
+  }
 
   yield put(updateAmountSuccess(productIndex, amount));
 }
